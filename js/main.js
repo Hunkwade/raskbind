@@ -3,30 +3,28 @@ document.addEventListener('DOMContentLoaded', function () {
     const categories = ['Coffee', 'Tech', 'Fashion', 'Real Estate', 'Health', 'Water'];
     const categoryTextElement = document.querySelector('.category-text');
     let currentIndex = 0;
-    
+
+    categoryTextElement.style.transition = 'opacity 0.5s ease-in-out';
+
     function animateCategory() {
         // Fade out
         categoryTextElement.style.opacity = '0';
-        
+
         setTimeout(() => {
             // Change text
             categoryTextElement.textContent = categories[currentIndex];
-            
+
             // Fade in
             categoryTextElement.style.opacity = '1';
-            
+
             // Increment index with looping
             currentIndex = (currentIndex + 1) % categories.length;
         }, 500); // Half of the total animation time
     }
-    
-    // Initial text
-    categoryTextElement.textContent = categories[0];
-    categoryTextElement.style.opacity = '1';
-    categoryTextElement.style.transition = 'opacity 0.5s ease-in-out';
-    
-    // Start animation
-    setInterval(animateCategory, 3000);
+
+    // Start animation without showing the first text twice
+    animateCategory(); // Initial animation start
+    setInterval(animateCategory, 3000); // Loop every 3 seconds
 
     // Mobile Menu Toggle
     const mobileToggle = document.querySelector('.mobile-toggle');
@@ -91,10 +89,9 @@ document.addEventListener('DOMContentLoaded', function () {
             header.classList.remove('scrolled');
         }
     }
-    
+
     window.addEventListener('scroll', handleScroll);
-    // Call it on initial load too
-    handleScroll();
+    handleScroll(); // Initial check on load
 
     // Form submission
     const contactForm = document.querySelector('#contact form');
@@ -115,8 +112,7 @@ document.addEventListener('DOMContentLoaded', function () {
                 return;
             }
 
-            // Here you would typically send the data to a server
-            // For demo purposes, we'll just show a success message
+            // For demo: show success message
             alert('Thank you for your message. We will get back to you soon!');
             contactForm.reset();
         });
@@ -135,16 +131,14 @@ document.addEventListener('DOMContentLoaded', function () {
         });
     });
 
-    // Initialize responsive functionality on page load
+    // Responsive behavior check
     function checkScreenSize() {
         if (window.innerWidth <= 768) {
-            // Mobile view - don't modify nav display directly
             nav.classList.remove('active');
             mobileToggle.classList.remove('active');
             header.classList.remove('mobile-active');
             body.classList.remove('menu-open');
         } else {
-            // Desktop view
             nav.classList.remove('active');
             mobileToggle.classList.remove('active');
             header.classList.remove('mobile-active');
@@ -152,9 +146,6 @@ document.addEventListener('DOMContentLoaded', function () {
         }
     }
 
-    // Check screen size on resize
     window.addEventListener('resize', checkScreenSize);
-
-    // Initial check
-    checkScreenSize();
-}); 
+    checkScreenSize(); // Initial check
+});
